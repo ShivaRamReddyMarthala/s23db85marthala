@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  p Hello I am Shiva,The goodthing you do is Fall in Love what makes you happy.
+  button(type="button" class="btn btn-secondary" onclick="goFaster()") Press Me
+  br
+  br
+  br
+  div#faster Increase the Speed
+
+  script.
+    mph = 20;
+    change = 1;
+
+    function goFaster(){
+      mph += change;
+      change += 1;
+      document.getElementById("faster").innerHTML = "MPH" + mph + "change" + change ;}
+    
+  a( href='/elephant') Back to search
