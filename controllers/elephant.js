@@ -19,3 +19,15 @@ res.send('NOT IMPLEMENTED: elephant delete DELETE ' + req.params.id);
 exports.elephant_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: elephant update PUT' + req.params.id);
 };
+
+// List of all elephant
+exports.elephant_list = async function(req, res) {
+    try{
+    theelephant = await elephant.find();
+    res.send(theelephant);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
