@@ -4,4 +4,4 @@ name: String,
 age: Number,
 species: String
 })
-module.exports = mongoose.model("Costume", elephantSchema)
+module.exports = mongoose.model("elephant", elephantSchema)
