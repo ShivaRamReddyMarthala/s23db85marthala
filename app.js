@@ -14,6 +14,55 @@ var resourceRouter = require('./routes/resource');
 
 var app = express();
 
+
+
+
+
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+// Delete everything
+await elephant.deleteMany();
+let instance1 = new elephant({name: "Jumbo", age: 10, species: "Asian"});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+
+
+let instance2 = new elephant({name: "Torto", age: 30, species: "African"});
+instance2.save().then(doc=>{
+console.log("Second object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance3 = new elephant({name: "Marie", age: 20, species: "America"});
+instance3.save().then(doc=>{
+console.log("Third object saved")}
+).catch(err=>{
+console.error(err)
+});
+}
+let reseed = true;
+if (reseed) {recreateDB();}
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -51,47 +100,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-require('dotenv').config();
-const connectionString =
-process.env.MONGO_CON
-mongoose = require('mongoose');
-mongoose.connect(connectionString);
-
-//Get the default connection
-var db = mongoose.connection;
-//Bind connection to error event
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once("open", function(){
-console.log("Connection to DB succeeded")});
-
-// We can seed the collection if needed on server start
-async function recreateDB(){
-// Delete everything
-await elephant.deleteMany();
-let instance1 = new elephant({name: "Jumbo", age: 10, species: "Asian"});
-instance1.save().then(doc=>{
-console.log("First object saved")}
-).catch(err=>{
-console.error(err)
-});
-
-let instance2 = new elephant({name: "Torto", age: 30, species: "African"});
-instance2.save().then(doc=>{
-console.log("Second object saved")}
-).catch(err=>{
-console.error(err)
-});
-
-let instance3 = new elephant({name: "Marie", age: 20, species: "America"});
-instance3.save().then(doc=>{
-console.log("Third object saved")}
-).catch(err=>{
-console.error(err)
-});
-}
-let reseed = true;
-if (reseed) {recreateDB();}
-
-
 
