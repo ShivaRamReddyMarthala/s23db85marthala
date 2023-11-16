@@ -14,14 +14,15 @@ exports.elephant_detail =  async function(req, res) {
     res.send(`{"error": document for id ${req.params.id} not found`);
     }
     };
-    
+ 
+/*
 // Handle elephant create on POST.
 exports.elephant_create_post = function(req, res) {
 res.send('NOT IMPLEMENTED: elephant create POST');
-};
+}; */
 
 
-// Handle Costume delete on DELETE.
+// Handle elephant delete on DELETE.
 exports.elephant_delete = async function(req, res) {
     console.log("delete " + req.params.id)
     try {
@@ -57,17 +58,19 @@ exports.elephant_update_put = async function(req, res) {
     }
     };
 
+
+
 //List of all elephant
 exports.elephant_list = async function(req, res) {
-try{
-theelephant = await elephant.find();
-res.send(theelephant);
-}
-catch(err){
-res.status(500);
-res.send(`{"error": ${err}}`);
-}
-};
+    try{
+    theelephant = await elephant.find();
+    res.send(theelephant);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
 
 
 // VIEWS
@@ -83,14 +86,14 @@ exports.elephant_view_all_Page = async function(req, res) {
     }
     };
 
-// Handle Costume create on POST.
+// Handle elephant create on POST.
 exports.elephant_create_post = async function(req, res) {
 console.log(req.body)
 let document = new elephant();
 // We are looking for a body, since POST does not have query parameters.
 // Even though bodies can be in many different formats, we will be picky
 // and require that it be a json object
-// {"costume_type":"goat", "cost":12, "size":"large"}
+// {"elephant_type":"goat", "cost":12, "size":"large"}
 document.name = req.body.name;
 document.age = req.body.age;
 document.species = req.body.species;
@@ -103,3 +106,20 @@ res.status(500);
 res.send(`{"error": ${err}}`);
 }
 };
+
+
+// Handle a show one view with id specified by query
+exports.elephant_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await elephant.findById( req.query.id)
+    res.render('elephantdetail',
+    { title: 'elephant Detail', toShow : result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
+
