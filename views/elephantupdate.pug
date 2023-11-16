@@ -1,0 +1,49 @@
+extends layout
+block content
+ h1= title
+ if(toShow == null)
+    h2 No instance to update
+ else 
+  - let elephantid = toShow._id
+  - let name = toShow.name
+  - let age = toShow.age
+  - let species = toShow.species
+  div.row(class='mb-2')
+  div.mr-1 ID is
+  span(style="color:green")  #{elephantid}
+  - let actionid = "/resource/elephant/" + elephantid
+  form(id='elephantForm', action=actionid, method="PUT")
+   div.form-group
+   div(class="row g-3 align-items-center")
+    div(class="col-4")
+        label.elephantAttr(for='name') elephant name
+    div(class="col-auto")
+        input#name(type='text', name='name',value=name)
+   div.form-group
+   div(class="row g-3 align-items-center")
+    div(class="col-4")
+        label.elephantAttr(for='age') elephant age
+    div(class="col-auto")
+        input#age(type='number', name='age',value=age)
+   div.form-group
+   div(class="row g-3 align-items-center")
+    div(class="col-4")
+        label.elephantAttr(for='species') elephant jumpheight
+    div(class="col-auto")
+        input#species(type='text', name='species',value=species)
+   input(class="btn btn-success m-2" type="submit")
+   button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+  script.
+   document.forms['elephantForm'].addEventListener('submit', (event) => {
+     event.preventDefault();
+     fetch(event.target.action, {
+         method: 'PUT',
+         body: new URLSearchParams(new FormData(event.target)) 
+     }).then((resp) => {
+         return resp.json();
+     }).then((body) => {
+         alert("Save succeded")
+     }).catch((error) => {
+         alert("Save failed " + error )
+     });
+    });
