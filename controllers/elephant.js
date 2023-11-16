@@ -19,10 +19,23 @@ exports.elephant_detail =  async function(req, res) {
 exports.elephant_create_post = function(req, res) {
 res.send('NOT IMPLEMENTED: elephant create POST');
 };
-// Handle elephant delete form on DELETE.
-exports.elephant_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: elephant delete DELETE ' + req.params.id);
-};
+
+
+// Handle Costume delete on DELETE.
+exports.elephant_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await elephant.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+    
+
+
 // Handle elephant update form on PUT.
 exports.elephant_update_put = async function(req, res) {
     console.log(`update on id ${req.params.id} with body
